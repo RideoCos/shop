@@ -1,0 +1,90 @@
+{% extends 'web/base_main.html' %}
+
+{% block title %}
+	天天生鲜-购物车
+{% endblock %}
+
+
+{% block content %}
+<div class="total_count">全部商品<em>2</em>件</div>
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+	{% if goods %}
+	{% for good in goods %}
+	<ul class="cart_list_td clearfix" >
+		<li class="col01"><input type="checkbox" name="" checked></li>
+		<li class="col02"><img src="/media/{{good.0.goods_front_image}}"></li>
+		<li class="col03">{{good.0.name}}<br><em>{{good.0.shop_price}}元/500g</em></li>
+		<li class="col04">500g</li>
+		<li class="col05">{{good.0.shop_price}}元/500g</li>
+		<li class="col06">
+			<div class="num_add">
+				<a href="javascript:;" class="add fl" onclick="add_number({{good.shop_price}})">+</a>
+				<input type="text" class="num_show fl" value="{{good.1}}">
+				<a href="javascript:;" class="minus fl" onclick="sub_number({{good.shop_price}})" >-</a>
+			</div>
+		</li>
+		<li class="col07">{{good.2}}</li>
+		<li class="col08"><a href="javascript:;">删除</a></li>
+	</ul>
+	{% endfor %}
+	{% endif %}
+	<script type="text/javascript">
+		function add_number(price){
+			<!--修改商品个数和商品的总价-->
+			var num = $('.num_show}').val();
+			var new_number = parseInt(num) + 1 ;
+			var total = price * new_number;
+			total = total.toFixed(2)
+			$('.total em').html(total + '元');
+			<!--修改商品个数-->
+			$('.num_show').val(new_number);
+		}
+	</script>
+	<script type="text/javascript">
+		function sub_number(price){
+			<!--修改商品个数和商品的总价-->
+			var num = $('.num_show').val();
+			var new_number = parseInt(num) - 1 ;
+			if (new_number >= 0){
+				var total = price * new_number;
+				total = total.toFixed(2)
+				$('.total em').html(total + '元');
+				<!--修改商品个数-->
+				$('.num_show').val(new_number);
+			}
+		}
+	</script>
+	<ul class="settlements">
+		<li class="col01"><input type="checkbox" name="" checked=""></li>
+		<li class="col02">全选</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em>22</em><br>共计<b>1</b>件商品</li>
+		<li class="col04"><a href="{% url 'front:place_older'%}">去结算</a></li>
+	</ul>
+
+{% endblock %}
+
+
+
+{% block footer %}
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+{% endblock %}

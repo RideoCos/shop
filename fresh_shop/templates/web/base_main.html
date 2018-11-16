@@ -1,0 +1,89 @@
+{% extends 'web/base.html' %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'web/css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'web/css/main.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+{% endblock %}
+
+{% block header %}
+    <div class="header_con">
+        <div class="header">
+            <div class="welcome fl">欢迎来到天天生鲜!</div>
+            <div class="fr">
+                {% if user.id %}
+                <div class="login_info fl" style="display:inline">
+                    欢迎您：<em>{{user.username}}</em>
+                    <span>|</span><a href="{% url 'front:logout' %}">注销</a>
+                </div>
+                {% else %}
+                <div class="login_btn fl">
+                    <a href="{% url 'front:login' %}">登录</a>
+                    <span>|</span>
+                    <a href="{% url 'front:register' %}">注册</a>
+                </div>
+                {% endif %}
+                <div class="user_link fl">
+                    <span>|</span>
+                    <a href="{% url 'front:user_center_info' %}">用户中心</a>
+                    <span>|</span>
+                    <a href="{% url 'front:cart' %}">我的购物车</a>
+                    <span>|</span>
+                    <a href="{% url 'front:user_center_order' %}">我的订单</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block search %}
+    <div class="search_bar clearfix">
+		<a href="{% url 'front:index' %}" class="logo fl"><img src="{% static 'web/images/logo.png' %}"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="{% url 'front:cart' %}" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">{{goods_count}}</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer %}
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+	<script type="text/javascript" src="{% static 'web/js/slideshow.js' %}"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
+{% endblock %}

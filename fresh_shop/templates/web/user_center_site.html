@@ -1,0 +1,79 @@
+{% extends 'web/base_main.html' %}
+
+{% block title %}
+	天天生鲜-用户中心
+{% endblock %}
+
+{% block content %}
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'front:user_center_info'%}" >· 个人信息</a></li>
+				<li><a href="{% url 'front:user_center_order' %}">· 全部订单</a></li>
+				<li><a href="{% url 'front:user_center_site'%}" class="active">· 收货地址</a></li>
+			</ul>
+		</div>
+		<div class="right_content clearfix">
+				<h3 class="common_title2">收货地址</h3>
+				<div class="site_con">
+					<dl>
+						<dt>当前地址：</dt>
+						<dd>收货人：{{users.signer_name}}</dd>
+						<dd>联系手机：{{users.signer_mobile}}</dd>
+						<dd>邮编：{{users.signer_postcode}}</dd>
+						<dd>收货地址：{{users.address}}</dd>
+					</dl>
+				</div>
+				<h3 class="common_title2">编辑地址</h3>
+				<div class="site_con">
+					<form action="" method="post">
+						{% csrf_token %}
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" name="username">
+							{{errors.username}}
+						</div>
+						<div class="form_group form_group2">
+							<label>详细地址：</label>
+							<textarea class="site_area" name="addr"></textarea>
+							<br>
+						</div>
+						<div align="center">{{errors.addr}}</div>
+
+						<div class="form_group">
+							<label>邮编：</label>
+							<input type="text" name="code">
+							{{errors.code}}
+						</div>
+						<div class="form_group">
+							<label>手机：</label>
+							<input type="text" name="tel">
+							{{errors.tel}}
+						</div>
+
+						<input type="submit"  value="提交" class="info_submit">
+					</form>
+
+				</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+{% endblock %}
